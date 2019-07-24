@@ -29,11 +29,13 @@ module.exports = {
 function generateEntitlements(cordovaContext, pluginPreferences) {
   context = cordovaContext;
 
-  var currentEntitlements = getEntitlementsFileContent();
-  console.log(currentEntitlements);
-  var newEntitlements = injectPreferences(currentEntitlements, pluginPreferences);
+  ['Debug', 'Release'].forEach(config => {
+    var currentEntitlements = getEntitlementsFileContent(config);
+    console.log(currentEntitlements);
+    var newEntitlements = injectPreferences(currentEntitlements, pluginPreferences);
 
-  saveContentToEntitlementsFile(newEntitlements);
+    saveContentToEntitlementsFile(config, newEntitlements);
+  });
 }
 
 // endregion
@@ -45,15 +47,13 @@ function generateEntitlements(cordovaContext, pluginPreferences) {
  *
  * @param {Object} content - data to save; JSON object that will be transformed into xml
  */
-function saveContentToEntitlementsFile(content) {
+function saveContentToEntitlementsFile(config, content) {
   var plistContent = plist.build(content);
   var filePath = pathToEntitlementsFile();
 
-  ['Debug', 'Release'].forEach(config => {
-    var entitlementsPath = path.join(filePath, 'Entitlements-' + config + '.plist');
-    // save it's content
-    fs.writeFileSync(entitlementsPath, plistContent, 'utf8');
-  });
+  var entitlementsPath = path.join(filePath, 'Entitlements-' + config + '.plist');
+  // save it's content
+  fs.writeFileSync(entitlementsPath, plistContent, 'utf8');
 }
 
 /**
@@ -61,8 +61,8 @@ function saveContentToEntitlementsFile(content) {
  *
  * @return {String} entitlements file content
  */
-function getEntitlementsFileContent() {
-  var pathToFile = path.join(pathToEntitlementsFile(), 'Entitlements-Debug.plist');
+function getEntitlementsFileContent(config) {
+  var pathToFile = path.join(pathToEntitlementsFile(), 'Entitlements-' + config + '.plist');
   var content;
 
   try {
