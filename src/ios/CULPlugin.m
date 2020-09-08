@@ -12,6 +12,7 @@
 #import "CDVInvokedUrlCommand+CULPlugin.h"
 #import "CULConfigJsonParser.h"
 
+
 @interface CULPlugin() {
     NSArray *_supportedHosts;
     CDVPluginResult *_storedEvent;
@@ -129,8 +130,9 @@
     NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:launchURL resolvingAgainstBaseURL:YES];
     CULHost *host = nil;
     for (CULHost *supportedHost in _supportedHosts) {
-        NSPredicate *pred = [NSPredicate predicateWithFormat:@"self LIKE[c] %@", supportedHost.name];
-        if ([pred evaluateWithObject:urlComponents.host]) {
+        NSPredicate *predEq = [NSPredicate predicateWithFormat:@"self LIKE[c] %@", supportedHost.name];
+        NSPredicate *predMatch = [NSPredicate predicateWithFormat:@"self MATCHES[c] %@", supportedHost.name];
+        if ([predEq evaluateWithObject:urlComponents.host] || [predMatch evaluateWithObject:urlComponents.host]) {
             host = supportedHost;
             break;
         }
