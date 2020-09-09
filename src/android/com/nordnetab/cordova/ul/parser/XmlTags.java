@@ -23,6 +23,11 @@ final class XmlTags {
     public static final String HOST_SCHEME_ATTRIBUTE = "scheme";
 
     /**
+     * Scheme attribute for the blocked entry
+     */
+    public static final String HOST_BLOCKED_ATTRIBUTE = "blocked";
+
+    /**
      * Name attribute for the host entry
      */
     public static final String HOST_NAME_ATTRIBUTE = "name";

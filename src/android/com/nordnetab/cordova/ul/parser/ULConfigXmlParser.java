@@ -109,8 +109,9 @@ public class ULConfigXmlParser extends ConfigXmlParser {
         final String hostName = xml.getAttributeValue(null, XmlTags.HOST_NAME_ATTRIBUTE);
         final String eventName = xml.getAttributeValue(null, XmlTags.HOST_EVENT_ATTRIBUTE);
         final String scheme = xml.getAttributeValue(null, XmlTags.HOST_SCHEME_ATTRIBUTE);
+        final String blocked = xml.getAttributeValue(null, XmlTags.HOST_BLOCKED_ATTRIBUTE);
 
-        processedHost = new ULHost(hostName, scheme, eventName);
+        processedHost = new ULHost(hostName, scheme, blocked, eventName);
     }
 
     /**

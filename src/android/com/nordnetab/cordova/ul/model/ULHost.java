@@ -19,6 +19,7 @@ public class ULHost {
     private final List<ULPath> paths;
     private final String name;
     private final String scheme;
+    private final String blocked;
     private String event;
 
     /**
@@ -26,11 +27,13 @@ public class ULHost {
      *
      * @param name   host name
      * @param scheme host scheme
+     * @param blocked blocked host name(s) - separrated by comma if more than one
      * @param event  event that corresponds to this host
      */
-    public ULHost(final String name, final String scheme, final String event) {
+    public ULHost(final String name, final String scheme, final String blocked, final String event) {
         this.name = name.toLowerCase();
         this.scheme = (scheme == null) ? DEFAULT_SCHEME : scheme;
+        this.blocked = (blocked == null) ? null : blocked;
         this.event = (event == null) ? DEFAULT_EVENT : event;
         this.paths = new ArrayList<ULPath>();
     }
@@ -71,6 +74,16 @@ public class ULHost {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Getter for blocked host names
+     * Defined as 'blocked' attribute.
+     *
+     * @return blocked host names
+     */
+    public String getBlocked() {
+        return blocked;
     }
 
     /**
