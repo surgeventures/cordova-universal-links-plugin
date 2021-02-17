@@ -310,7 +310,7 @@ function injectPathComponentIntoIntentFilter(intentFilter, pathName) {
     pathName = pathName.replace(/\*/g, '.*');
   }
 
-  if (pathName.indexOf('/') != 0) {
+  if (pathName !== "" && pathName.indexOf('/') != 0) {
     pathName = '/' + pathName;
   }
 
